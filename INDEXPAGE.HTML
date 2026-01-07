@@ -838,25 +838,3 @@
     // ... el resto de tus datos
   };
 
-  // 2. Inicializar Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // 3. Función para enviar datos (Ejemplo: un formulario)
-  window.enviarDatos = async (nombreUser, correoUser) => {
-    try {
-      const docRef = await addDoc(collection(db, "contactos"), {
-        nombre: nombreUser,
-        email: correoUser,
-        fecha: new Date()
-      });
-      alert("¡Datos guardados con éxito!");
-    } catch (e) {
-      console.error("Error al guardar: ", e);
-    }
-  }
-</script>
-
-<button onclick="enviarDatos('Juan Perez', 'juan@correo.com')">
-  Enviar datos de prueba
-</button>
