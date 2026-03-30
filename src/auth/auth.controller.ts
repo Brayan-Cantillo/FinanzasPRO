@@ -1,7 +1,11 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Patch, Body, UseGuards, Req } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 import { RegisterDto } from './dto/register.dto.js';
 import { LoginDto } from './dto/login.dto.js';
+import { ResetPasswordDto } from './dto/reset-password.dto.js';
+import { ChangePasswordDto } from './dto/change-password.dto.js';
+import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
+import type { Request } from 'express';
 
 /**
  * Controlador de autenticación.
@@ -21,5 +25,18 @@ export class AuthController {
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
+  }
+
+  /** POST /auth/reset-password - Restablece la contraseña usando solo el email */
+  @Post('reset-password')
+  resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto);
+  }
+
+  /** PATCH /auth/change-password - Cambia la contraseña del usuario autenticado */
+  @UseGuards(JwtAuthGuard)
+  @Patch('change-password')
+  changePassword(@Req() req: Request, @Body() dto: ChangePasswordDto) {
+    return this.authService.changePassword((req as any).user.id, dto);
   }
 }
