@@ -63,4 +63,14 @@ export class UsersService {
     Object.assign(user, dto);
     return this.usersRepository.save(user);
   }
+
+  /** Actualiza la contraseña de un usuario por su ID */
+  async updatePassword(id: string, hashedPassword: string): Promise<void> {
+    const user = await this.usersRepository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.password = hashedPassword;
+    await this.usersRepository.save(user);
+  }
 }
