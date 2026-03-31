@@ -28,11 +28,7 @@ npm install
 Crear un archivo `.env` en la raíz del proyecto:
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASS=tu_password
-DB_NAME=finanzas_db
+DATABASE_URL=""
 JWT_SECRET=tu_secreto_jwt
 PORT=3000
 ```
